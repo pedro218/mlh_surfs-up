@@ -10,7 +10,13 @@ const DisplaySelected = ({ selectedBeach }) => {
           Name: {selectedBeach.NameMobileWeb}
         </Col>
         <Col>
-          Area: 
+          Area: {selectedBeach.GEOGR_AREA}
+        </Col>
+        <Col>
+          Dog Friendly: {selectedBeach.DOG_FRIENDLY.length ? selectedBeach.DOG_FRIENDLY : '?'}
+        </Col>
+        <Col>
+          Campground: {selectedBeach.CAMPGROUND.length ? selectedBeach.CAMPGROUND : '?'}
         </Col>
       </Row>
     </div>

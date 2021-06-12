@@ -28,7 +28,10 @@ const App = () => {
   }, [beachSearch])
 
   const setUpSelected = id => {
-    // code here
+    console.log(id)
+    const selected = beachList.filter(beach => beach.ID === id)
+    setSelectedBeach(selected[0])
+    setBeachSearch('')
   }
 
   return (
