@@ -6,6 +6,7 @@ const Search = ({ setBeachSearch }) => {
   const onSubmit = event => {
     event.preventDefault()
     setBeachSearch(value)
+    setValue('')
   }
   return (
     <Form onSubmit={onSubmit}>

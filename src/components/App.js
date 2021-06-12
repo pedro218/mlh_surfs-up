@@ -4,12 +4,13 @@ import { Navbar, Container } from 'react-bootstrap'
 import getBeaches from '../api/getBeaches'
 import Search from './Search'
 import ShowResults from './ShowResults'
+import DisplaySelected from './DisplaySelected'
 
 const App = () => {
   const [beachSearch, setBeachSearch] = useState('')
   const [beaches, setBeaches] = useState([])
   const [beachList, setBeachList] = useState([])
-
+  const [selectedBeach, setSelectedBeach] = useState({})
   useEffect(() => {
     const setup = async () => {
       const response = await getBeaches()
@@ -21,12 +22,14 @@ const App = () => {
   useEffect(() => {
     if (beachSearch === '')
       return
-    console.log('here')
+    setSelectedBeach({})
     const newBeachList = beaches.filter(beach => beach.NameMobileWeb.toLowerCase().includes(beachSearch))
     setBeachList(newBeachList)
-    console.log(newBeachList)
   }, [beachSearch])
 
+  const setUpSelected = id => {
+    // code here
+  }
 
   return (
     <div>
@@ -37,10 +40,12 @@ const App = () => {
         <Search setBeachSearch={setBeachSearch} />
         <br />
         {beachSearch.length ? 
-          <p>Showing results for {beachSearch}</p> :
-          ''
+          <p>Showing results for {beachSearch}</p> : ''
         }
-        <ShowResults beachList={beachList} />
+        {!Object.keys(selectedBeach).length ?
+          <ShowResults beachList={beachList} setSelectedBeach={setUpSelected}/> :
+          <DisplaySelected selectedBeach={selectedBeach} />
+        }
       </Container>
     </div>
 
