@@ -31,7 +31,7 @@ const DisplaySelected = ({ selectedBeach }) => {
           Temperature: {weather.main.temp} <span>&#8457;</span> - {weather.weather[0].description}
         </Col>
         <Col>
-          Wind speed: {weather.wind.speed} - {goodToSurf()}
+          Wind speed: {weather.wind.speed} mph - {goodToSurf()}
         </Col>
       </>
     )
