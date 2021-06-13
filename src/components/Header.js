@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <div>
       <div className="full-width">
-        <h1 className="title">Good Day to Surf?</h1>
+        <h1 className="title">Good Day to Surf in California?</h1>
       </div>
     </div>
   )
