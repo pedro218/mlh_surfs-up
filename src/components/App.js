@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Navbar, Container } from 'react-bootstrap'
-import getBeaches from '../api/getBeaches'
+import { Container } from 'react-bootstrap'
+import { getBeaches } from '../api/apiCalls'
+
+import Header from './Header'
 import Search from './Search'
 import ShowResults from './ShowResults'
 import DisplaySelected from './DisplaySelected'
@@ -34,19 +36,23 @@ const App = () => {
     setBeachSearch('')
   }
 
+  const renderResults = () => {
+    if (beachSearch === '') 
+      return ''
+    return <ShowResults beachList={beachList} setSelectedBeach={setUpSelected}/>
+  }
+
   return (
     <div>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand>My Hackathon Project</Navbar.Brand>
-      </Navbar> 
+      <Header />
       <Container>
         <Search setBeachSearch={setBeachSearch} />
         <br />
         {beachSearch.length ? 
-          <p>Showing results for {beachSearch}</p> : ''
+          <i>Showing results for <strong>{beachSearch}</strong></i> : ''
         }
         {!Object.keys(selectedBeach).length ?
-          <ShowResults beachList={beachList} setSelectedBeach={setUpSelected}/> :
+          renderResults() :
           <DisplaySelected selectedBeach={selectedBeach} />
         }
       </Container>

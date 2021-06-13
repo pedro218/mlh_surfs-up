@@ -1,23 +1,56 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Row, Col } from 'react-bootstrap'
+import { getWeather } from '../api/apiCalls'
 
 const DisplaySelected = ({ selectedBeach }) => {
+  const [weather, setWeather] = useState({})
+
+  useEffect(() => {
+    const getData = async () => {
+      const response =  await getWeather(selectedBeach.LATITUDE, selectedBeach.LONGITUDE)
+      setWeather(response)
+    }
+    getData()
+  }, [])
+
+  const goodToSurf = () => {
+    let recommendation = ''
+    if (weather.wind.speed < 5)
+      recommendation = 'Winds are not strong enough.'
+    else if (weather.wind.speed <= 10)
+      recommendation = 'Good to surf'
+    else 
+      recommendation = 'Winds to high. No Surfing recommended'
+    return recommendation
+  }
+
+  const surfConditions = () => {
+    return (
+      <>
+        <Col>
+          Temperature: {weather.main.temp} <span>&#8457;</span> - {weather.weather[0].description}
+        </Col>
+        <Col>
+          Wind speed: {weather.wind.speed} - {goodToSurf()}
+        </Col>
+      </>
+    )
+  }
 
   return (
     <div>
+      <h3>{selectedBeach.NameMobileWeb}</h3>
       <Row>
         <Col>
-          Name: {selectedBeach.NameMobileWeb}
+          Phone Number: {selectedBeach.PHONE_NMBR.length ? selectedBeach.PHONE_NMBR : '?'}
         </Col>
         <Col>
-          Area: {selectedBeach.GEOGR_AREA}
+          Parking: {selectedBeach.PARKING.length ? selectedBeach.PARKING : '?'}
         </Col>
-        <Col>
-          Dog Friendly: {selectedBeach.DOG_FRIENDLY.length ? selectedBeach.DOG_FRIENDLY : '?'}
-        </Col>
-        <Col>
-          Campground: {selectedBeach.CAMPGROUND.length ? selectedBeach.CAMPGROUND : '?'}
-        </Col>
+      </Row>
+      <br />
+      <Row>
+        {Object.keys(weather).length ? surfConditions() : '' }
       </Row>
     </div>
   )
